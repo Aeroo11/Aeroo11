@@ -1,205 +1,144 @@
-"""Membuat assets/header.svg: kastil sihir di tepi danau pada malam hari (SVG murni, gambar orisinal)."""
-import math, random, pathlib
+"""Membuat assets/header.svg: perpustakaan sihir di malam hari (SVG murni, gambar orisinal, animasi halus)."""
+import random, pathlib
 
-random.seed(9)
-W, H = 1200, 420
-LAKE = 318          # garis permukaan danau
+random.seed(5)
+W, H = 1200, 400
 o = []
 a = o.append
 
 a(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="Efan Ramdhani - AI Engineer in training">')
 a(f'''<defs>
-  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#03050f"/><stop offset=".45" stop-color="#0a1430"/><stop offset="1" stop-color="#1d2f57"/>
+  <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#0d0a0b"/><stop offset=".6" stop-color="#17110f"/><stop offset="1" stop-color="#0b0808"/>
   </linearGradient>
-  <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#0f1c3a"/><stop offset="1" stop-color="#02040b"/>
+  <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b1d16"/><stop offset="1" stop-color="#160e0a"/></linearGradient>
+  <linearGradient id="night" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1633"/><stop offset="1" stop-color="#1f3466"/></linearGradient>
+  <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#b9cdf5" stop-opacity=".28"/><stop offset="1" stop-color="#b9cdf5" stop-opacity="0"/>
   </linearGradient>
-  <radialGradient id="moonglow"><stop offset="0" stop-color="#dfe9ff" stop-opacity=".55"/><stop offset=".35" stop-color="#9fb8ef" stop-opacity=".18"/><stop offset="1" stop-color="#9fb8ef" stop-opacity="0"/></radialGradient>
-  <radialGradient id="moon" cx=".42" cy=".4"><stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="#e3eaf7"/><stop offset="1" stop-color="#b9c6de"/></radialGradient>
+  <radialGradient id="vig" r=".8"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".75"/></radialGradient>
+  <radialGradient id="bflame" cx=".5" cy=".65" r=".6"><stop offset="0" stop-color="#ffffff"/><stop offset=".4" stop-color="#cfe6ff"/><stop offset=".8" stop-color="#5a8fe6"/><stop offset="1" stop-color="#2a5bc4" stop-opacity="0"/></radialGradient>
+  <radialGradient id="bhalo"><stop offset="0" stop-color="#8fbaf0" stop-opacity=".3"/><stop offset="1" stop-color="#8fbaf0" stop-opacity="0"/></radialGradient>
+  <radialGradient id="bookglow"><stop offset="0" stop-color="#cfe0ff" stop-opacity=".35"/><stop offset="1" stop-color="#cfe0ff" stop-opacity="0"/></radialGradient>
   <linearGradient id="silver" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#8fa3c7"/><stop offset=".35" stop-color="#e8eefa"/><stop offset=".5" stop-color="#ffffff"/>
-    <stop offset=".65" stop-color="#e8eefa"/><stop offset="1" stop-color="#8fa3c7"/>
-    <animateTransform attributeName="gradientTransform" type="translate" values="-1 0;1 0" dur="5s" repeatCount="indefinite"/>
+    <stop offset="0" stop-color="#9aa8c4"/><stop offset=".4" stop-color="#e9edf6"/><stop offset=".5" stop-color="#ffffff"/>
+    <stop offset=".6" stop-color="#e9edf6"/><stop offset="1" stop-color="#9aa8c4"/>
+    <animateTransform attributeName="gradientTransform" type="translate" values="-1 0;1 0" dur="9s" repeatCount="indefinite"/>
   </linearGradient>
-  <linearGradient id="spell" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#ffffff" stop-opacity="0"/><stop offset=".3" stop-color="#cfe6ff"/><stop offset="1" stop-color="#ffffff"/>
-  </linearGradient>
-  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <filter id="mist" x="-30%" y="-100%" width="160%" height="300%"><feGaussianBlur stdDeviation="14"/></filter>
-  <filter id="ripple" x="0" y="0" width="100%" height="100%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.004 0.09" numOctaves="2" seed="3">
-      <animate attributeName="baseFrequency" values="0.004 0.09;0.004 0.12;0.004 0.09" dur="7s" repeatCount="indefinite"/>
-    </feTurbulence>
-    <feDisplacementMap in="SourceGraphic" scale="9" xChannelSelector="R" yChannelSelector="G"/>
-    <feGaussianBlur stdDeviation=".8"/>
-  </filter>
-  <radialGradient id="bflame" cx=".5" cy=".65" r=".6"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#bfe8ff"/><stop offset=".75" stop-color="#3f8cff"/><stop offset="1" stop-color="#1d4fd8" stop-opacity="0"/></radialGradient>
-  <radialGradient id="bhalo"><stop offset="0" stop-color="#6fb6ff" stop-opacity=".45"/><stop offset="1" stop-color="#6fb6ff" stop-opacity="0"/></radialGradient>
-  <linearGradient id="wax" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c9d3e6"/><stop offset=".5" stop-color="#f4f7fc"/><stop offset="1" stop-color="#aeb9d0"/></linearGradient>
-  <clipPath id="frame"><rect width="{W}" height="{H}" rx="20"/></clipPath>
-  <clipPath id="above"><rect width="{W}" height="{LAKE}"/></clipPath>
+  <linearGradient id="page" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#cfd2da"/><stop offset="1" stop-color="#eef0f4"/></linearGradient>
+  <linearGradient id="pageR" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#eef0f4"/><stop offset="1" stop-color="#cfd2da"/></linearGradient>
+  <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="blur6"><feGaussianBlur stdDeviation="6"/></filter>
+  <clipPath id="frame"><rect width="{W}" height="{H}" rx="18"/></clipPath>
 </defs>''')
 a('''<style>
-  .tw{animation:tw 3s ease-in-out infinite}
-  @keyframes tw{0%,100%{opacity:.2}50%{opacity:1}}
-  .win{animation:win 5s ease-in-out infinite}
-  @keyframes win{0%,100%{opacity:.9}40%{opacity:.45}60%{opacity:1}}
-  .mist{animation:mist 22s ease-in-out infinite alternate}
-  @keyframes mist{from{transform:translateX(-80px)}to{transform:translateX(120px)}}
-  .owl{animation:owl 16s linear infinite}
-  @keyframes owl{0%{transform:translate(380px,200px) scale(.8);opacity:0}6%{opacity:1}
-    45%{transform:translate(860px,118px) scale(1.5)}94%{opacity:1}100%{transform:translate(1260px,40px) scale(1.1);opacity:0}}
-  .wing{animation:flap .45s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:50% 100%}
-  @keyframes flap{from{transform:scaleY(1)}to{transform:scaleY(-.55)}}
-  .cast{stroke-dasharray:1200;stroke-dashoffset:1200;animation:cast 7s ease-in-out infinite}
-  @keyframes cast{0%{stroke-dashoffset:1200;opacity:1}40%{stroke-dashoffset:0;opacity:1}75%{stroke-dashoffset:0;opacity:.9}100%{stroke-dashoffset:0;opacity:0}}
-  .spark{animation:spark 2.4s ease-out infinite}
-  @keyframes spark{0%{opacity:0;transform:translate(0,0)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy))}}
-  .bolt{animation:bolt 4s infinite}
-  @keyframes bolt{0%,88%,100%{opacity:.85}90%{opacity:.2}92%{opacity:1}94%{opacity:.3}96%{opacity:1}}
-  .sub{opacity:0;animation:sub 12s infinite}
-  @keyframes sub{0%{opacity:0}3%,30%{opacity:1}33%,100%{opacity:0}}
-  .s2{animation-delay:4s}.s3{animation-delay:8s}
-  .type{animation:type 4s steps(28) infinite}
-  @keyframes type{0%{transform:scaleX(0)}40%,100%{transform:scaleX(1)}}
-  .shoot{animation:shoot 9s ease-in infinite}
-  @keyframes shoot{0%,78%{transform:translate(0,0);opacity:0}80%{opacity:1}90%{transform:translate(-300px,140px);opacity:0}100%{opacity:0}}
-  .candle{animation:bob 5s ease-in-out infinite}
-  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
-  .flame{animation:flick .3s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:50% 100%}
-  @keyframes flick{from{transform:scale(1,1)}to{transform:scale(.82,1.2)}}
-  .broom{animation:broom 15s linear infinite;animation-delay:3s;opacity:0}
-  @keyframes broom{0%{transform:translate(1320px,70px) rotate(-4deg);opacity:1}
-    25%{transform:translate(960px,40px) rotate(3deg)}50%{transform:translate(600px,58px) rotate(-3deg)}
-    75%{transform:translate(260px,30px) rotate(4deg)}100%{transform:translate(-160px,60px) rotate(-2deg);opacity:1}}
-  .cape{animation:cape .35s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:0% 0%}
-  @keyframes cape{from{transform:skewY(0deg)}to{transform:skewY(8deg)}}
+  .dust{animation:dust linear infinite}
+  @keyframes dust{0%{transform:translate(0,0);opacity:0}20%{opacity:.8}80%{opacity:.6}100%{transform:translate(40px,150px);opacity:0}}
+  .flame{animation:flick .5s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:50% 100%}
+  @keyframes flick{from{transform:scale(1,1)}to{transform:scale(.88,1.1)}}
+  .float{animation:float 6s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  .turn{transform-box:fill-box;transform-origin:0% 50%;animation:turn 9s ease-in-out infinite}
+  @keyframes turn{0%,55%{transform:scaleX(1)}75%,100%{transform:scaleX(-1)}}
+  .turn2{animation:fade2 9s ease-in-out infinite}
+  @keyframes fade2{0%,74%{opacity:1}76%,100%{opacity:0}}
+  .rise{animation:rise 7s ease-out infinite}
+  @keyframes rise{0%{transform:translate(0,0);opacity:0}20%{opacity:.9}100%{transform:translate(var(--dx),-70px);opacity:0}}
+  .sub{opacity:0;animation:sub 15s infinite}
+  @keyframes sub{0%{opacity:0}5%,30%{opacity:1}35%,100%{opacity:0}}
+  .s2{animation-delay:5s}.s3{animation-delay:10s}
+  .tw{animation:tw 4s ease-in-out infinite}
+  @keyframes tw{0%,100%{opacity:.3}50%{opacity:1}}
   .serif{font-family:Georgia,'Palatino Linotype','Book Antiqua',serif}
 </style>''')
-a(f'<g clip-path="url(#frame)">')
-a(f'<rect width="{W}" height="{H}" fill="url(#sky)"/>')
+a(f'<g clip-path="url(#frame)"><rect width="{W}" height="{H}" fill="url(#wall)"/>')
 
-# bintang
-for _ in range(150):
-    x, y = random.uniform(0, W), random.uniform(0, LAKE - 40)
-    a(f'<circle class="tw" cx="{x:.0f}" cy="{y:.0f}" r="{random.choice([.5, .7, .9, 1.3])}" fill="#fff" '
-      f'style="animation-delay:{random.uniform(0, 3):.1f}s;animation-duration:{random.uniform(2, 5):.1f}s"/>')
-a('<g class="shoot"><line x1="700" y1="30" x2="770" y2="-3" stroke="url(#spell)" stroke-width="1.6" transform="rotate(180 735 13)"/>'
-  '<circle cx="700" cy="30" r="2" fill="#fff" filter="url(#soft)"/></g>')
+# ===== jendela gotik =====
+WX, WW, WT, WB = 495, 210, 22, 205
+mid = WX + WW / 2
+arch = f'M{WX} {WB} V{WT + 80} Q{WX} {WT + 10} {mid} {WT} Q{WX + WW} {WT + 10} {WX + WW} {WT + 80} V{WB} Z'
+a(f'<path d="{arch}" fill="url(#night)"/>')
+for _ in range(26):
+    a(f'<circle class="tw" cx="{random.uniform(WX + 8, WX + WW - 8):.0f}" cy="{random.uniform(WT + 30, WB - 60):.0f}" r="{random.choice([.6, .9, 1.2])}" fill="#fff" '
+      f'style="animation-delay:{random.uniform(0, 4):.1f}s"/>')
+a(f'<circle cx="{WX + 150}" cy="{WT + 70}" r="22" fill="#eef2fb"/><circle cx="{WX + 150}" cy="{WT + 70}" r="40" fill="#cfdcf7" opacity=".15"/>')
+lead = []
+for k in range(1, 4):
+    x = WX + WW * k / 4
+    lead.append(f'<line x1="{x:.0f}" y1="{WT + 8}" x2="{x:.0f}" y2="{WB}"/>')
+for y in range(WT + 60, WB, 36):
+    lead.append(f'<line x1="{WX}" y1="{y}" x2="{WX + WW}" y2="{y}"/>')
+a(f'<g stroke="#1a120e" stroke-width="3">{"".join(lead)}</g>')
+a(f'<path d="{arch}" fill="none" stroke="#2b1d16" stroke-width="12"/><path d="{arch}" fill="none" stroke="#3a281e" stroke-width="3"/>')
+a(f'<rect x="{WX - 16}" y="{WB}" width="{WW + 32}" height="12" fill="#2b1d16"/>')
+a(f'<polygon points="{WX + 10},{WB} {WX + WW - 10},{WB} {mid + 230},{H} {mid - 190},{H}" fill="url(#beam)"/>')
+for _ in range(40):
+    x = random.uniform(WX + 10, WX + WW); y = random.uniform(WB - 10, WB + 120)
+    a(f'<circle class="dust" cx="{x:.0f}" cy="{y:.0f}" r="{random.choice([.7, 1, 1.3])}" fill="#e3ebfb" '
+      f'style="animation-duration:{random.uniform(9, 16):.1f}s;animation-delay:{-random.uniform(0, 16):.1f}s"/>')
 
-# bulan
-MX, MY = 860, 112
-a(f'<circle cx="{MX}" cy="{MY}" r="150" fill="url(#moonglow)"/><circle cx="{MX}" cy="{MY}" r="56" fill="url(#moon)"/>')
-for dx, dy, r in [(-16, -10, 9), (14, 12, 6), (-4, 22, 4), (20, -18, 5)]:
-    a(f'<circle cx="{MX + dx}" cy="{MY + dy}" r="{r}" fill="#c6d1e6" opacity=".55"/>')
+# ===== rak buku =====
+COLORS = ["#5a1f24", "#4a191d", "#1f3b2d", "#18301f", "#1d2a4a", "#16213b", "#3a2440", "#3b2a1e", "#2c2f36", "#432a22"]
 
-# ===== kastil =====
-def castle(ox, base, scale, fill, lit):
-    s = []
-    p = s.append
-    # (x relatif, lebar, tinggi badan, tinggi atap)
-    towers = [(0, 26, 70, 46), (34, 18, 105, 52), (60, 40, 60, 0), (104, 22, 140, 64), (132, 30, 90, 40),
-              (170, 16, 170, 78), (192, 34, 110, 0), (232, 24, 150, 60), (262, 44, 75, 0), (312, 20, 120, 56),
-              (338, 28, 85, 44), (372, 14, 135, 58), (392, 36, 60, 0), (434, 22, 95, 46)]
-    wins = []
-    for tx, tw, th, rh in towers:
-        x = ox + tx * scale; w = tw * scale; h = th * scale; top = base - h
-        p(f'<rect x="{x:.1f}" y="{top:.1f}" width="{w:.1f}" height="{h + 4:.1f}"/>')
-        if rh:
-            r = rh * scale
-            p(f'<path d="M{x - 3 * scale:.1f} {top:.1f} Q{x + w / 2:.1f} {top - r * .35:.1f} {x + w / 2:.1f} {top - r:.1f} Q{x + w / 2:.1f} {top - r * .35:.1f} {x + w + 3 * scale:.1f} {top:.1f}Z"/>')
-            p(f'<line x1="{x + w / 2:.1f}" y1="{top - r:.1f}" x2="{x + w / 2:.1f}" y2="{top - r - 9 * scale:.1f}" stroke="{fill}" stroke-width="{1.4 * scale:.1f}"/>')
-        else:
-            for i in range(int(tw // 8)):
-                p(f'<rect x="{x + i * 8 * scale + scale:.1f}" y="{top - 5 * scale:.1f}" width="{5 * scale:.1f}" height="{5 * scale:.1f}"/>')
-        if lit:
-            for _ in range(random.randint(1, 3) if h > 60 * scale else 1):
-                wx = x + random.uniform(.25, .65) * w; wy = top + random.uniform(.15, .75) * h
-                wins.append(f'<path class="win" d="M{wx:.1f} {wy + 7 * scale:.1f}v-{4 * scale:.1f}a{1.8 * scale:.1f} {1.8 * scale:.1f} 0 0 1 {3.6 * scale:.1f} 0v{4 * scale:.1f}z" '
-                            f'fill="#cfe2ff" style="animation-delay:{random.uniform(0, 5):.1f}s"/>')
-    # jembatan berlengkung
-    bx = ox + 262 * scale; by = base - 40 * scale
-    p(f'<path d="M{bx - 60 * scale:.1f} {by:.1f} h{150 * scale:.1f} v{8 * scale:.1f} ' +
-      " ".join(f'h-{6 * scale:.1f} a{9 * scale:.1f} {12 * scale:.1f} 0 0 0 -{18 * scale:.1f} 0' for _ in range(6)) + ' Z"/>')
-    return f'<g fill="{fill}">' + "".join(s) + '</g>' + "".join(wins)
+def shelf(x0, x1, y0, y1, row_h=64):
+    a(f'<rect x="{x0}" y="{y0}" width="{x1 - x0}" height="{y1 - y0}" fill="url(#wood)"/>')
+    y = y0 + 10
+    while y + row_h <= y1:
+        x = x0 + 10
+        while x < x1 - 14:
+            if random.random() < .06:
+                x += random.uniform(8, 20); continue
+            w = random.uniform(9, 20); h = random.uniform(row_h * .62, row_h * .9)
+            if x + w > x1 - 10: break
+            col = random.choice(COLORS); top = y + row_h - h
+            lean = random.random() < .05
+            g = f' transform="rotate({random.choice([-8, 8])} {x + w / 2:.0f} {y + row_h:.0f})"' if lean else ''
+            a(f'<g{g}><rect x="{x:.1f}" y="{top:.1f}" width="{w:.1f}" height="{h:.1f}" rx="1.2" fill="{col}"/>'
+              f'<rect x="{x:.1f}" y="{top + 6:.1f}" width="{w:.1f}" height="1.3" fill="#9aa3b5" opacity=".45"/>'
+              f'<rect x="{x:.1f}" y="{top + h - 8:.1f}" width="{w:.1f}" height="1.3" fill="#9aa3b5" opacity=".45"/>'
+              f'<rect x="{x:.1f}" y="{top:.1f}" width="{w * .25:.1f}" height="{h:.1f}" fill="#fff" opacity=".04"/></g>')
+            x += w + random.uniform(.5, 2)
+        a(f'<rect x="{x0}" y="{y + row_h}" width="{x1 - x0}" height="8" fill="#2f2018"/><rect x="{x0}" y="{y + row_h}" width="{x1 - x0}" height="1.5" fill="#4a3426"/>')
+        y += row_h + 8
+    a(f'<rect x="{x0}" y="{y0}" width="10" height="{y1 - y0}" fill="#24180f"/><rect x="{x1 - 10}" y="{y0}" width="10" height="{y1 - y0}" fill="#24180f"/>')
 
-CX0 = 590
-cliff = (f'<path d="M{CX0 - 40} {LAKE} L{CX0 - 10} {LAKE - 40} L{CX0 + 30} {LAKE - 52} L{CX0 + 90} {LAKE - 60} L{CX0 + 200} {LAKE - 66} '
-         f'L{CX0 + 330} {LAKE - 62} L{CX0 + 450} {LAKE - 70} L{CX0 + 520} {LAKE - 50} L{CX0 + 560} {LAKE - 30} L{CX0 + 600} {LAKE} Z" fill="#05070f"/>')
-far = castle(CX0 + 40, LAKE - 50, .9, "#16244a", False)
-near = castle(CX0 + 20, LAKE - 58, 1.15, "#05070f", True)
-scene = f'<g opacity=".9">{far}</g>{near}{cliff}'
-a(f'<g clip-path="url(#above)">{scene}</g>')
+shelf(0, 420, 0, H)
+shelf(W - 420, W, 0, H)
+# tangga perpustakaan
+a('<g stroke="#3d2a1f" stroke-width="5" stroke-linecap="round"><line x1="330" y1="40" x2="300" y2="400"/><line x1="372" y1="40" x2="342" y2="400"/></g>')
+a('<g stroke="#3d2a1f" stroke-width="4">' + "".join(f'<line x1="{328 - i * 2.4:.0f}" y1="{70 + i * 30}" x2="{370 - i * 2.4:.0f}" y2="{70 + i * 30}"/>' for i in range(11)) + '</g>')
 
-# danau + pantulan
-a(f'<rect x="0" y="{LAKE}" width="{W}" height="{H - LAKE}" fill="url(#lake)"/>')
-a(f'<g filter="url(#ripple)" opacity=".45"><g transform="translate(0 {2 * LAKE}) scale(1 -1)">{scene}'
-  f'<circle cx="{MX}" cy="{MY}" r="56" fill="#dfe9ff" opacity=".7"/></g></g>')
-for i in range(9):
-    w = random.uniform(30, 90)
-    a(f'<rect class="tw" x="{MX - w / 2 + random.uniform(-25, 25):.0f}" y="{LAKE + 12 + i * 9}" width="{w:.0f}" height="1.4" fill="#e3ecff" opacity=".6" '
-      f'style="animation-delay:{i * .35:.2f}s"/>')
-a(f'<rect x="0" y="{LAKE}" width="{W}" height="1" fill="#6f86b8" opacity=".45"/>')
-# kabut
-for y, op, d in [(LAKE - 18, .22, 0), (LAKE + 10, .18, -8)]:
-    a(f'<g class="mist" style="animation-delay:{d}s"><ellipse cx="{W / 2}" cy="{y}" rx="{W * .55:.0f}" ry="18" fill="#b8c8e8" opacity="{op}" filter="url(#mist)"/></g>')
+# lilin kecil di rak
+for i, (cx, cy) in enumerate([(120, 136), (250, 280), (900, 208), (1080, 352), (1130, 64)]):
+    a(f'<g transform="translate({cx} {cy})"><circle cx="0" cy="-16" r="24" fill="url(#bhalo)"/>'
+      f'<rect x="-4" y="-14" width="8" height="18" rx="1.5" fill="#d9dde6"/>'
+      f'<ellipse class="flame" cx="0" cy="-20" rx="3.4" ry="7" fill="url(#bflame)" filter="url(#soft)" style="animation-delay:{i * .13:.2f}s"/></g>')
 
-# lilin melayang api biru
-for i, (cx, cy, sc) in enumerate([(612, 30, .9), (700, 128, 1), (985, 40, .95), (1075, 150, 1.05), (1150, 52, .85),
-                                  (760, 210, .8), (960, 215, .8), (420, 205, .9), (300, 222, .8), (548, 175, .75),
-                                  (36, 40, .8), (255, 34, .7)]):
-    a(f'<g class="candle" style="animation-delay:{-i * .8:.1f}s;animation-duration:{4 + (i % 3)}s"><g transform="translate({cx} {cy}) scale({sc})">'
-      f'<circle cx="0" cy="-8" r="16" fill="url(#bhalo)"/>'
-      f'<rect x="-4.5" y="0" width="9" height="30" rx="2" fill="url(#wax)"/>'
-      f'<path d="M-4.5 2 q2 6 3 0 q1.5 9 3 1 q1 5 3 -1 v-2 h-9z" fill="#ffffff" opacity=".9"/>'
-      f'<line x1="0" y1="0" x2="0" y2="-3" stroke="#2a2f3a" stroke-width="1"/>'
-      f'<ellipse class="flame" cx="0" cy="-9" rx="4.2" ry="8.5" fill="url(#bflame)" filter="url(#soft)" style="animation-delay:{i * .07:.2f}s"/>'
-      f'</g></g>')
+# vignette + area gelap di belakang judul agar terbaca
+a(f'<rect width="{W}" height="{H}" fill="url(#vig)"/>')
+a(f'<ellipse cx="{W / 2}" cy="262" rx="270" ry="62" fill="#000000" opacity=".6" filter="url(#blur6)"/>')
 
-# penyihir bersapu terbang (menghadap kiri)
-a('<g class="broom"><g transform="scale(1.4)"><g filter="url(#soft)" stroke="#9fb6e6" stroke-opacity=".5" stroke-width=".7" stroke-linejoin="round">'
-  '<line x1="-4" y1="14" x2="62" y2="20" stroke="#0a0d18" stroke-width="3" stroke-linecap="round"/>'
-  '<path d="M58 15 L86 8 L90 20 L86 32 L58 25 Z" fill="#0a0d18"/>'
-  '<path d="M62 18 L88 14 M62 20 L90 20 M62 22 L88 26" stroke="#1d2540" stroke-width="1"/>'
-  '<path class="cape" d="M24 0 L52 2 L66 10 L56 12 L44 8 L30 14 Z" fill="#0a0d18"/>'
-  '<path d="M18 -2 Q24 -6 30 -2 L34 14 L18 16 Z" fill="#0a0d18"/>'
-  '<circle cx="22" cy="-9" r="6" fill="#0a0d18"/>'
-  '<path d="M16 -8 Q30 -14 40 -6 Q30 -9 18 -6 Z" fill="#0a0d18"/>'
-  '<path d="M24 16 L20 26 L26 26 Z" fill="#0a0d18"/>'
-  '<path d="M26 -2 Q44 -4 56 -12" stroke="#7fa6e8" stroke-width="2.4" fill="none" stroke-linecap="round"/>'
-  '</g>'
-  + "".join(f'<circle cx="{90 + k * 9}" cy="{20 + (k % 2) * 4}" r="{1.6 - k * .2:.1f}" fill="#cfe6ff" opacity="{.8 - k * .12:.2f}" filter="url(#soft)"/>' for k in range(6))
-  + '</g></g>')
+# ===== judul =====
+a(f'<text x="{W / 2}" y="262" text-anchor="middle" class="serif" font-size="58" font-weight="700" letter-spacing="2" fill="url(#silver)">Efan Ramdhani</text>')
+a(f'<line x1="{W / 2 - 150}" y1="280" x2="{W / 2 + 150}" y2="280" stroke="#9aa8c4" stroke-width=".8" opacity=".6"/>')
+for i, s in enumerate(["AI Engineer in training", "mahasiswa ITS · data &amp; machine learning", "setiap jawaban dimulai dari membaca"]):
+    a(f'<text x="{W / 2}" y="306" text-anchor="middle" class="serif sub s{i + 1}" font-size="19" font-style="italic" fill="#c5cede">{s}</text>')
 
-# burung hantu
-a('<g class="owl"><g transform="translate(0 0)">'
-  '<path class="wing" d="M0 0 C-10 -12 -26 -12 -34 -2 C-24 -6 -12 -3 0 0Z" fill="#05070f"/>'
-  '<path class="wing" d="M0 0 C10 -12 26 -12 34 -2 C24 -6 12 -3 0 0Z" fill="#05070f"/>'
-  '<ellipse cx="0" cy="2" rx="6" ry="8" fill="#05070f"/><path d="M-5 -5 l2 -5 l3 4 l3 -4 l2 5z" fill="#05070f"/></g></g>')
-
-# ===== judul & mantra =====
-TX = 70
-a(f'<g class="bolt" filter="url(#glow)"><path d="M{TX + 4} 70 l-14 26 h11 l-9 22 l22 -30 h-11 l10 -18z" fill="#e8eefa"/></g>')
-a(f'<text x="{TX + 32}" y="112" class="serif" font-size="66" font-weight="700" letter-spacing="1.5" fill="url(#silver)" filter="url(#soft)">Efan Ramdhani</text>')
-subs = ["AI Engineer in training", "Fakultas Sihir Data · ITS", "merapal model, bukan sekadar kode"]
-for i, s in enumerate(subs):
-    w = len(s) * 12.5
-    a(f'<g class="sub s{i + 1}"><clipPath id="cl{i}"><rect class="type" x="{TX + 34}" y="132" width="{w:.0f}" height="34" '
-      f'style="transform-origin:{TX + 34}px 0;animation-delay:{i * 4}s"/></clipPath>'
-      f'<text x="{TX + 34}" y="158" class="serif" font-size="24" font-style="italic" fill="#c9d6ee" clip-path="url(#cl{i})">{s}</text></g>')
-# tongkat + pita mantra
-a(f'<g transform="translate({TX - 12} 262) rotate(-32)"><rect x="0" y="-3.5" width="118" height="7" rx="3.5" fill="#3a2a22"/>'
-  '<rect x="0" y="-4.5" width="36" height="9" rx="4" fill="#24170f"/><circle cx="12" cy="0" r="1.6" fill="#5a4334"/><circle cx="22" cy="0" r="1.6" fill="#5a4334"/></g>')
-TIPX, TIPY = TX - 12 + 118 * math.cos(math.radians(-32)), 262 + 118 * math.sin(math.radians(-32))
-a(f'<path class="cast" d="M{TIPX:.0f} {TIPY:.0f} C {TIPX + 80:.0f} {TIPY - 70:.0f}, {TIPX + 160:.0f} {TIPY + 40:.0f}, {TIPX + 260:.0f} {TIPY - 10:.0f} '
-  f'S {TIPX + 420:.0f} {TIPY - 60:.0f}, {TIPX + 500:.0f} {TIPY - 20:.0f}" fill="none" stroke="url(#spell)" stroke-width="3" stroke-linecap="round" filter="url(#glow)"/>')
-for i in range(14):
-    a(f'<circle class="spark" cx="{TIPX:.0f}" cy="{TIPY:.0f}" r="{random.choice([1.2, 1.8, 2.4])}" fill="#e6f1ff" filter="url(#soft)" '
-      f'style="--dx:{random.uniform(-30, 50):.0f}px;--dy:{random.uniform(-50, 20):.0f}px;animation-delay:{i * .17:.2f}s"/>')
-a('</g>')
-a(f'<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="20" fill="none" stroke="#2a3a66" opacity=".8"/>')
+# ===== buku terbuka melayang =====
+BX, BY = W / 2, 352
+a(f'<g class="float"><ellipse cx="{BX}" cy="{BY + 2}" rx="90" ry="26" fill="url(#bookglow)"/>')
+a(f'<path d="M{BX} {BY - 18} Q{BX - 30} {BY - 26} {BX - 62} {BY - 20} L{BX - 62} {BY + 10} Q{BX - 30} {BY + 4} {BX} {BY + 12} Z" fill="url(#page)"/>')
+a(f'<path d="M{BX} {BY - 18} Q{BX + 30} {BY - 26} {BX + 62} {BY - 20} L{BX + 62} {BY + 10} Q{BX + 30} {BY + 4} {BX} {BY + 12} Z" fill="url(#pageR)"/>')
+for k in range(4):
+    a(f'<line x1="{BX - 54}" y1="{BY - 12 + k * 6}" x2="{BX - 10}" y2="{BY - 10 + k * 6}" stroke="#8c93a3" stroke-width=".8" opacity=".6"/>')
+    a(f'<line x1="{BX + 10}" y1="{BY - 10 + k * 6}" x2="{BX + 54}" y2="{BY - 12 + k * 6}" stroke="#8c93a3" stroke-width=".8" opacity=".6"/>')
+a(f'<g class="turn2"><path class="turn" d="M{BX} {BY - 18} Q{BX + 30} {BY - 26} {BX + 62} {BY - 20} L{BX + 62} {BY + 10} Q{BX + 30} {BY + 4} {BX} {BY + 12} Z" fill="#f4f5f8" stroke="#c8ccd6" stroke-width=".5"/></g>')
+a(f'<path d="M{BX - 64} {BY + 10} Q{BX - 30} {BY + 6} {BX} {BY + 15} Q{BX + 30} {BY + 6} {BX + 64} {BY + 10} L{BX + 64} {BY + 14} Q{BX + 30} {BY + 10} {BX} {BY + 19} Q{BX - 30} {BY + 10} {BX - 64} {BY + 14} Z" fill="#4a191d"/>')
+for i in range(7):
+    a(f'<circle class="rise" cx="{BX + random.uniform(-40, 40):.0f}" cy="{BY - 18}" r="{random.choice([1, 1.4])}" fill="#e3ecff" filter="url(#soft)" '
+      f'style="--dx:{random.uniform(-25, 25):.0f}px;animation-delay:{i:.0f}s"/>')
+a('</g></g>')
+a(f'<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="18" fill="none" stroke="#2b1d16"/>')
 a('</svg>')
 
 pathlib.Path(__file__).resolve().parent.parent.joinpath('assets/header.svg').write_text('\n'.join(o))
