@@ -10,12 +10,12 @@ a('''<defs>
     <stop offset="0" stop-color="#0b0820"/><stop offset=".55" stop-color="#1c1240"/><stop offset="1" stop-color="#3a1d4f"/>
   </linearGradient>
   <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#b8862b"/><stop offset=".35" stop-color="#f6dc8a"/>
-    <stop offset=".5" stop-color="#fff6d0"/><stop offset=".65" stop-color="#f6dc8a"/><stop offset="1" stop-color="#b8862b"/>
+    <stop offset="0" stop-color="#7f93b3"/><stop offset=".35" stop-color="#d6e2f3"/>
+    <stop offset=".5" stop-color="#ffffff"/><stop offset=".65" stop-color="#d6e2f3"/><stop offset="1" stop-color="#7f93b3"/>
     <animateTransform attributeName="gradientTransform" type="translate" values="-1 0;1 0" dur="4s" repeatCount="indefinite"/>
   </linearGradient>
-  <radialGradient id="moonGlow"><stop offset="0" stop-color="#fff4c4" stop-opacity=".55"/><stop offset="1" stop-color="#fff4c4" stop-opacity="0"/></radialGradient>
-  <radialGradient id="flame"><stop offset="0" stop-color="#fffbe6"/><stop offset=".5" stop-color="#ffd166"/><stop offset="1" stop-color="#ff8c1a" stop-opacity="0"/></radialGradient>
+  <radialGradient id="moonGlow"><stop offset="0" stop-color="#cfe3ff" stop-opacity=".55"/><stop offset="1" stop-color="#cfe3ff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="flame"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#9fd8ff"/><stop offset="1" stop-color="#3a7bd5" stop-opacity="0"/></radialGradient>
   <linearGradient id="trail" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff"/></linearGradient>
   <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 </defs>
@@ -45,7 +45,7 @@ for _ in range(110):
     r = random.choice([.6, .8, 1, 1.2, 1.6])
     a(f'<circle class="tw" cx="{x:.0f}" cy="{y:.0f}" r="{r}" fill="#fff" style="animation-delay:{random.uniform(0,3):.2f}s;animation-duration:{random.uniform(2,4.5):.1f}s"/>')
 # bulan
-a('<circle cx="1040" cy="78" r="90" fill="url(#moonGlow)"/><circle cx="1040" cy="78" r="38" fill="#fdf1c7"/><circle cx="1056" cy="68" r="34" fill="#1a1140" opacity=".92"/>')
+a('<circle cx="1040" cy="78" r="90" fill="url(#moonGlow)"/><circle cx="1040" cy="78" r="38" fill="#e9eff9"/><circle cx="1056" cy="68" r="34" fill="#1a1140" opacity=".92"/>')
 # bintang jatuh
 a('<g class="shoot"><line x1="980" y1="40" x2="1060" y2="2" stroke="url(#trail)" stroke-width="2" transform="rotate(180 1020 21)"/><circle cx="980" cy="40" r="2.4" fill="#fff" filter="url(#glow)"/></g>')
 # kastil (siluet orisinal)
@@ -65,26 +65,26 @@ for x,w,h,kind in towers:
             castle.append(f'<rect x="{x+i*14+2}" y="{top-9}" width="8" height="9"/>')
     for _ in range(random.randint(1,3)):
         wx = x + random.uniform(6, max(7, w-14)); wy = top + random.uniform(10, max(11, h-14))
-        wins.append(f'<rect class="win" x="{wx:.0f}" y="{wy:.0f}" width="6" height="10" rx="3" fill="#ffcf6b" style="animation-delay:{random.uniform(0,4):.1f}s"/>')
+        wins.append(f'<rect class="win" x="{wx:.0f}" y="{wy:.0f}" width="6" height="10" rx="3" fill="#8fd3ff" style="animation-delay:{random.uniform(0,4):.1f}s"/>')
 castle.append('</g>')
 a('<path d="M0 %d Q300 %d 600 %d T1200 %d V%d H0Z" fill="#120c26"/>' % (base+10, base-20, base+5, base-5, H))
 out += castle + wins
 a(f'<rect x="0" y="{base+20}" width="{W}" height="{H-base-20}" fill="#0a0716"/>')
 # lilin melayang
 for i,(cx,cy) in enumerate([(90,60),(215,110),(330,40),(1150,200),(960,170),(720,30)]):
-    a(f'<g class="candle" style="animation-delay:{i*.7:.1f}s"><rect x="{cx-4}" y="{cy}" width="8" height="26" rx="2" fill="#f4ead2"/>'
-      f'<ellipse class="fl" cx="{cx}" cy="{cy-7}" rx="4.5" ry="8" fill="url(#flame)"/><circle cx="{cx}" cy="{cy-6}" r="12" fill="#ffd166" opacity=".12"/></g>')
+    a(f'<g class="candle" style="animation-delay:{i*.7:.1f}s"><rect x="{cx-4}" y="{cy}" width="8" height="26" rx="2" fill="#e3e9f3"/>'
+      f'<ellipse class="fl" cx="{cx}" cy="{cy-7}" rx="4.5" ry="8" fill="url(#flame)"/><circle cx="{cx}" cy="{cy-6}" r="12" fill="#8fd3ff" opacity=".15"/></g>')
 # judul
 a('<text x="600" y="150" text-anchor="middle" class="title" font-size="68" fill="url(#gold)" filter="url(#glow)">EFAN RAMDHANI</text>')
-a('<line x1="390" y1="173" x2="810" y2="173" stroke="#d9b45a" stroke-width="1" opacity=".6"/><circle cx="600" cy="173" r="3" fill="#f6dc8a"/>')
+a('<line x1="390" y1="173" x2="810" y2="173" stroke="#9fb4d6" stroke-width="1" opacity=".6"/><circle cx="600" cy="173" r="3" fill="#d6e2f3"/>')
 subs = ['AI Engineer in training', 'Data Wizard  ·  ITS', 'Merapal pipeline, melatih model']
 for i,s in enumerate(subs):
-    a(f'<text x="600" y="212" text-anchor="middle" class="serif sub s{i+1}" font-size="26" fill="#efe3c2" font-style="italic">{s}</text>')
+    a(f'<text x="600" y="212" text-anchor="middle" class="serif sub s{i+1}" font-size="26" fill="#d3def0" font-style="italic">{s}</text>')
 # tongkat sihir + percikan
 a('<g transform="translate(355 268) rotate(-22)"><rect x="0" y="-3" width="120" height="6" rx="3" fill="#5a3a22"/><rect x="0" y="-4" width="34" height="8" rx="3" fill="#3d2616"/></g>')
 for i in range(10):
     dx, dy = random.uniform(-40,40), random.uniform(-45,10)
-    a(f'<circle class="spark" cx="466" cy="223" r="{random.choice([1.5,2,2.5])}" fill="#ffe9a8" filter="url(#glow)" style="--dx:{dx:.0f}px;--dy:{dy:.0f}px;animation-delay:{i*.22:.2f}s"/>')
+    a(f'<circle class="spark" cx="466" cy="223" r="{random.choice([1.5,2,2.5])}" fill="#bfe6ff" filter="url(#glow)" style="--dx:{dx:.0f}px;--dy:{dy:.0f}px;animation-delay:{i*.22:.2f}s"/>')
 a('</svg>')
 pathlib.Path(__file__).resolve().parent.parent.joinpath('assets/header.svg').write_text('\n'.join(out))
 print('ok')

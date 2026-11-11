@@ -42,7 +42,7 @@ Saya suka membangun sistem yang **mengukur dirinya sendiri secara jujur**, dari 
 ### 🗺️ Peta jejak sihir
 
 <p align="center">
-  <img src="assets/peta-jejak-sihir.svg" alt="Peta kontribusi bergaya perkamen" width="100%" />
+  <img src="assets/peta-jejak-sihir.svg" alt="Peta kontribusi bergaya langit malam" width="100%" />
 </p>
 <p align="center"><sub>Digambar ulang setiap hari dari data kontribusi GitHub oleh <a href=".github/workflows/peta-jejak-sihir.yml">GitHub Actions</a>.</sub></p>
 
