@@ -1,4 +1,4 @@
-name: Peta Jejak Sihir
+name: Perbarui grafik kontribusi
 
 on:
   schedule:
@@ -12,18 +12,18 @@ permissions:
   contents: write
 
 jobs:
-  gambar-peta:
+  perbarui-grafik:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Gambar peta dari data kontribusi
-        run: python3 scripts/peta_jejak.py ${{ github.repository_owner }}
+      - name: Buat grafik dari data kontribusi
+        run: python3 scripts/kontribusi.py ${{ github.repository_owner }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Simpan peta
+      - name: Simpan grafik
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/peta-jejak-sihir.svg
-          git diff --cached --quiet || git commit -m "chore: perbarui peta jejak sihir"
+          git add assets/kontribusi.svg
+          git diff --cached --quiet || git commit -m "chore: perbarui grafik kontribusi"
           git push

@@ -1,4 +1,4 @@
-"""Membuat assets/header.svg: perpustakaan sihir di malam hari (SVG murni, gambar orisinal, animasi halus)."""
+"""Membuat assets/header.svg: perpustakaan di malam hari (SVG murni, gambar orisinal, animasi halus)."""
 import random, pathlib
 
 random.seed(5)
@@ -121,7 +121,7 @@ a(f'<ellipse cx="{W / 2}" cy="262" rx="270" ry="62" fill="#000000" opacity=".6" 
 # ===== judul =====
 a(f'<text x="{W / 2}" y="262" text-anchor="middle" class="serif" font-size="58" font-weight="700" letter-spacing="2" fill="url(#silver)">Efan Ramdhani</text>')
 a(f'<line x1="{W / 2 - 150}" y1="280" x2="{W / 2 + 150}" y2="280" stroke="#9aa8c4" stroke-width=".8" opacity=".6"/>')
-for i, s in enumerate(["AI Engineer in training", "mahasiswa ITS · data &amp; machine learning", "setiap jawaban dimulai dari membaca"]):
+for i, s in enumerate(["AI Engineer in training", "mahasiswa ITS · data &amp; machine learning", "membangun sistem data &amp; ML yang andal"]):
     a(f'<text x="{W / 2}" y="306" text-anchor="middle" class="serif sub s{i + 1}" font-size="19" font-style="italic" fill="#c5cede">{s}</text>')
 
 # ===== buku terbuka melayang =====

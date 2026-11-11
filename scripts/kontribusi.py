@@ -1,9 +1,9 @@
-"""Peta Jejak Sihir: menggambar ulang grafik kontribusi GitHub sebagai peta perkamen beranimasi.
+"""Grafik kontribusi GitHub beranimasi bergaya langit malam.
 
 Pemakaian:
-  GITHUB_TOKEN=... python scripts/peta_jejak.py Aeroo11   # data asli (dipakai GitHub Actions)
-  python scripts/peta_jejak.py --demo                     # data acak untuk pratinjau
-Output: assets/peta-jejak-sihir.svg
+  GITHUB_TOKEN=... python scripts/kontribusi.py Aeroo11   # data asli (dipakai GitHub Actions)
+  python scripts/kontribusi.py --demo                     # data acak untuk pratinjau
+Output: assets/kontribusi.svg
 """
 import json, os, random, sys, pathlib, urllib.request, datetime as dt
 
@@ -13,7 +13,7 @@ QUERY = """query($login:String!){user(login:$login){contributionsCollection{cont
 def fetch(login, token):
     req = urllib.request.Request("https://api.github.com/graphql",
         data=json.dumps({"query": QUERY, "variables": {"login": login}}).encode(),
-        headers={"Authorization": f"bearer {token}", "Content-Type": "application/json", "User-Agent": "peta-jejak-sihir"})
+        headers={"Authorization": f"bearer {token}", "Content-Type": "application/json", "User-Agent": "contribution-graph"})
     data = json.load(urllib.request.urlopen(req))
     if "errors" in data: raise SystemExit(data["errors"])
     cal = data["data"]["user"]["contributionsCollection"]["contributionCalendar"]
@@ -80,7 +80,7 @@ def render(weeks, login):
     W = X0 + len(weeks) * (CELL + GAP) + 50; H = Y0 + 7 * (CELL + GAP) + 120
     ink = ["#3b5583", "#1f4f80", "#2f7fc0", "#5fb6ec", "#d4f3ff"]
     o = []; a = o.append
-    a(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="Peta Jejak Sihir: {total} kontribusi dalam setahun terakhir">')
+    a(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="Aktivitas kontribusi: {total} kontribusi dalam 12 bulan terakhir">')
     a('''<defs>
  <filter id="paper" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="3" seed="4"/>
   <feColorMatrix values="0 0 0 0 .55  0 0 0 0 .65  0 0 0 0 .9  0 0 0 .05 0"/><feComposite in2="SourceGraphic" operator="in"/><feBlend in="SourceGraphic" mode="screen"/></filter>
@@ -112,8 +112,8 @@ def render(weeks, login):
     for _ in range(70):
         a(f'<circle class="star" cx="{rnd.uniform(20, W-20):.0f}" cy="{rnd.uniform(20, H-20):.0f}" r="{rnd.choice([.5,.7,1])}" fill="#fff" style="animation-delay:{rnd.uniform(0,3):.1f}s"/>')
     a(f'<rect x="14" y="14" width="{W-28}" height="{H-28}" rx="6" fill="none" stroke="#5f7fb0" stroke-width="1.2" stroke-dasharray="2 4" opacity=".6"/>')
-    a(f'<text class="t" x="{W/2}" y="46" text-anchor="middle" font-size="24" font-weight="700" letter-spacing="2">PETA JEJAK SIHIR</text>')
-    a(f'<text class="t" x="{W/2}" y="68" text-anchor="middle" font-size="13" font-style="italic" opacity=".8">jejak cahaya milik {login}, dirapal sepanjang tahun</text>')
+    a(f'<text class="t" x="{W/2}" y="46" text-anchor="middle" font-size="24" font-weight="700" letter-spacing="2">AKTIVITAS KONTRIBUSI</text>')
+    a(f'<text class="t" x="{W/2}" y="68" text-anchor="middle" font-size="13" font-style="italic" opacity=".8">Kontribusi GitHub {login} dalam 12 bulan terakhir</text>')
     # kompas
     cx, cy = W - 58, 52
     a(f'<g opacity=".75" transform="translate({cx} {cy})"><circle r="20" fill="none" stroke="#8fb0dc"/><polygon points="0,-18 4,0 0,18 -4,0" fill="#bcd3f0"/><polygon points="-18,0 0,-4 18,0 0,4" fill="#5f7fb0"/>'
@@ -162,8 +162,8 @@ def render(weeks, login):
       f'<animateMotion dur="11s" repeatCount="indefinite" path="{path} Q{W/2} {Y0-60} {X0-20} {Y0+20}"/></g>')
     # segel statistik
     yb = Y0 + 7*(CELL+GAP) + 30
-    seals = [(f"{total}", "kontribusi setahun"), (f"{longest} hari", "rantai mantra terpanjang"),
-             (f"{cur} hari", "rantai saat ini"), (f"{best[1]}", f"rekor harian · {best[0]}")]
+    seals = [(f"{total}", "total kontribusi"), (f"{longest} hari", "streak terpanjang"),
+             (f"{cur} hari", "streak saat ini"), (f"{best[1]}", f"rekor harian · {best[0]}")]
     sw = (W - 2*X0) / len(seals)
     for k, (big, small) in enumerate(seals):
         sx = X0 + sw*k + 26
@@ -189,5 +189,5 @@ if __name__ == "__main__":
         dirs = sys.argv[sys.argv.index("--from-git") + 1:]
         weeks = from_git(dirs, set(os.environ.get("AUTHOR_NAMES", login).split(",")))
     else: weeks = fetch(login, os.environ["GITHUB_TOKEN"])
-    out = pathlib.Path(__file__).resolve().parent.parent / "assets" / "peta-jejak-sihir.svg"
+    out = pathlib.Path(__file__).resolve().parent.parent / "assets" / "kontribusi.svg"
     out.write_text(render(weeks, login)); print("ditulis:", out)
