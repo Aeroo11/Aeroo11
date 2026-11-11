@@ -32,6 +32,27 @@ def demo():
         weeks.append(wk)
     return weeks
 
+def from_git(dirs, names):
+    """Cadangan saat Actions tidak bisa jalan: hitung commit milik pemilik dari clone lokal."""
+    import subprocess, collections
+    cnt = collections.Counter()
+    for d in dirs:
+        out = subprocess.run(["git", "-C", d, "log", "--all", "--format=%an|%ae|%ad", "--date=short"],
+                             capture_output=True, text=True).stdout
+        for line in out.splitlines():
+            an, ae, day = line.split("|")
+            if an in names or ae in names: cnt[day] += 1
+    today = dt.date.today(); start = today - dt.timedelta(days=364)
+    start -= dt.timedelta(days=(start.weekday() + 1) % 7)
+    weeks, d = [], start
+    while d <= today:
+        wk = []
+        for wd in range(7):
+            if d > today: break
+            wk.append((d.isoformat(), cnt[d.isoformat()], wd)); d += dt.timedelta(days=1)
+        weeks.append(wk)
+    return weeks
+
 def stats(weeks):
     days = [x for w in weeks for x in w]
     total = sum(c for _, c, _ in days)
@@ -157,7 +178,11 @@ def render(weeks, login):
     return "\n".join(o)
 
 if __name__ == "__main__":
-    login = next((x for x in sys.argv[1:] if not x.startswith("-")), "Aeroo11")
-    weeks = demo() if "--demo" in sys.argv else fetch(login, os.environ["GITHUB_TOKEN"])
+    login = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("-") else "Aeroo11"
+    if "--demo" in sys.argv: weeks = demo()
+    elif "--from-git" in sys.argv:
+        dirs = sys.argv[sys.argv.index("--from-git") + 1:]
+        weeks = from_git(dirs, set(os.environ.get("AUTHOR_NAMES", login).split(",")))
+    else: weeks = fetch(login, os.environ["GITHUB_TOKEN"])
     out = pathlib.Path(__file__).resolve().parent.parent / "assets" / "peta-jejak-sihir.svg"
     out.write_text(render(weeks, login)); print("ditulis:", out)
