@@ -5,31 +5,62 @@
 Saya membangun pipeline data, mengevaluasi model, dan membuat aplikasi
 agar hasilnya bisa diperiksa.
 
-## Proyek pilihan
+## Coba proyek saya
 
-### KANAL
+### KANAL | Tebak kanal berita
 
-Pipeline klasifikasi berita Indonesia dari RSS hingga FastAPI. Model mencapai
-**macro-F1 0,420 vs 0,026 untuk baseline** pada 517 artikel uji temporal.
+**Pilih judul untuk membuka prediksi model.** Satu dari dua contoh ini meleset.
 
-[Studi kasus dan demo Docker](https://github.com/Aeroo11/kanal-berita-dashboard/blob/main/docs/portfolio.md) | [Dataset publik](https://huggingface.co/datasets/aeroo11/kanal-berita)
+<details>
+<summary>Persib melaju ke final setelah menang lewat adu penalti</summary>
 
-### TokenWatch
+**KANAL memilih olahraga dengan skor 29,26%.**
 
-Dashboard untuk menelusuri lonjakan biaya LLM hingga ke request yang terkait.
-Simulator memakai trafik sintetis untuk membandingkan skenario routing.
+</details>
 
-<a href="https://llm-cost-dashboard-omega.vercel.app/"><img width="640" alt="Tampilan TokenWatch dengan grafik biaya LLM dan daftar anomali pada trafik simulasi" src="https://raw.githubusercontent.com/Aeroo11/LLM-Cost-Dashboard/e63b6d0b531fdf1bea88b29cfe74f533d3115af2/docs/screenshot-dashboard.png"></a>
+<details>
+<summary>Bank Indonesia pertahankan suku bunga acuan</summary>
 
-[Coba demo TokenWatch](https://llm-cost-dashboard-omega.vercel.app/) | [Kode dan catatan teknis](https://github.com/Aeroo11/LLM-Cost-Dashboard)
+**KANAL memilih teknologi dengan skor 36,02%.** Judul ini lebih cocok masuk kanal
+**ekonomi**. Contoh ini menunjukkan kesalahan yang bisa muncul meskipun
+modelnya mengungguli baseline pada data uji.
 
-### Faktura
+</details>
 
-Membaca invoice, mencocokkannya dengan pesanan pembelian dan bukti penerimaan
-barang, lalu mengirim selisih ke antrean review. Sistem mendeteksi
-**99 dari 99 anomali** pada evaluasi invoice sintetis.
+**Macro-F1 0,420** pada 517 artikel uji temporal. Baseline kelas mayoritas
+mencapai **0,026**. [Studi kasus dan demo Docker](https://github.com/Aeroo11/kanal-berita-dashboard/blob/main/docs/portfolio.md) | [Dataset publik](https://huggingface.co/datasets/aeroo11/kanal-berita)
 
-[Proyek dan hasil evaluasi](https://github.com/Aeroo11/faktura/blob/main/README.id.md)
+### TokenWatch | Ubah routing model LLM
+
+Apa yang terjadi pada biaya jika separuh trafik dari endpoint *summarize*
+dialihkan ke model lain? Buka simulator, pilih model tujuan, lalu geser
+porsi trafik ke **50%**. Proyeksi dihitung dari trafik simulasi.
+
+[**Buka simulator TokenWatch**](https://llm-cost-dashboard-omega.vercel.app/?view=simulator) | [Telusuri anomali biaya](https://llm-cost-dashboard-omega.vercel.app/?view=anomalies)
+
+<details>
+<summary>Lihat tampilan simulator</summary>
+
+<a href="https://llm-cost-dashboard-omega.vercel.app/?view=simulator"><img width="640" alt="Simulator TokenWatch yang mengalihkan 50 persen trafik summarize dan membandingkan proyeksi biaya dengan baseline" src="https://raw.githubusercontent.com/Aeroo11/LLM-Cost-Dashboard/e63b6d0b531fdf1bea88b29cfe74f533d3115af2/docs/screenshot-simulator.png"></a>
+
+[Kode dan catatan teknis](https://github.com/Aeroo11/LLM-Cost-Dashboard)
+
+</details>
+
+### Faktura | Periksa selisih invoice
+
+Pemasok menagih **100 unit**, sementara bukti penerimaan mencatat **80 unit**.
+
+<details>
+<summary>Lihat keputusan Faktura</summary>
+
+**Perlu peninjauan.** Pengecekan kuantitas menemukan selisih 20 unit, sehingga
+invoice masuk antrean peninjauan dengan status *business exception*.
+
+</details>
+
+Skenario ini menggambarkan aturan pencocokan Faktura. Pada evaluasi invoice
+sintetis, Faktura mendeteksi **99 dari 99 anomali**. [Proyek dan hasil evaluasi](https://github.com/Aeroo11/faktura/blob/main/README.id.md)
 
 **Stack utama** Python, SQL, DuckDB, dbt, FastAPI, Next.js, dan Docker.
 
