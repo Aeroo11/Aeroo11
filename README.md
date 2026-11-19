@@ -1,31 +1,45 @@
 # Efan Ramdhani
 
-Saya mahasiswa Institut Teknologi Sepuluh Nopember (ITS) yang berfokus pada AI engineering. Saya membangun pipeline data, mengevaluasi model, dan menyajikan hasilnya lewat dashboard yang bisa ditelusuri sampai ke data sumber.
+**Mahasiswa ITS dengan fokus AI engineering.**
 
-## Proyek unggulan
+Saya membangun pipeline data, mengevaluasi model, dan membuat aplikasi
+agar hasilnya bisa diperiksa.
 
-### TokenWatch · Observabilitas biaya LLM
+## Proyek pilihan
 
-Dashboard untuk menelusuri biaya per model dan endpoint, menyelidiki anomali hingga ke request terkait, dan menguji skenario routing. DuckDB mengolah trafik simulasi dan Next.js mengirim pembaruan lewat Server-Sent Events.
+### KANAL
 
-[Repositori dan screenshot](https://github.com/Aeroo11/LLM-Cost-Dashboard) · [Demo interaktif](https://llm-cost-dashboard-omega.vercel.app/)
+Pipeline klasifikasi berita Indonesia dari RSS hingga FastAPI. Model mencapai
+**macro-F1 0,420 vs 0,026 untuk baseline** pada 517 artikel uji temporal.
 
-### KANAL · Klasifikasi berita Indonesia
+[Studi kasus dan demo Docker](https://github.com/Aeroo11/kanal-berita-dashboard/blob/main/docs/portfolio.md) | [Dataset publik](https://huggingface.co/datasets/aeroo11/kanal-berita)
 
-Pipeline klasifikasi berita dari feed RSS hingga evaluasi temporal dan registry model. Pada 517 artikel uji, TF-IDF dan LinearSVC mencapai macro-F1 **0,420**, dibandingkan **0,026** untuk baseline kelas mayoritas.
+### TokenWatch
 
-[Repositori dan protokol evaluasi](https://github.com/Aeroo11/kanal-berita-dashboard) · [Dataset publik](https://huggingface.co/datasets/aeroo11/kanal-berita)
+Dashboard untuk menelusuri lonjakan biaya LLM hingga ke request yang terkait.
+Simulator memakai trafik sintetis untuk membandingkan skenario routing.
 
-### Proyek lain
+<a href="https://llm-cost-dashboard-omega.vercel.app/"><img width="640" alt="Tampilan TokenWatch dengan grafik biaya LLM dan daftar anomali pada trafik simulasi" src="https://raw.githubusercontent.com/Aeroo11/LLM-Cost-Dashboard/e63b6d0b531fdf1bea88b29cfe74f533d3115af2/docs/screenshot-dashboard.png"></a>
 
-- **Dashboard IDX** menggabungkan screening saham BEI, ukuran posisi, jurnal, dan backtest dengan hasil yang bisa diperiksa. [Repositori](https://github.com/Aeroo11/Dashboard_IDX)
-- **share.yow** mencatat pengeluaran bersama dan menghitung siapa harus membayar siapa. Aplikasi menyimpan transaksi secara lokal dengan SQLite dan berjalan offline. [Repositori](https://github.com/Aeroo11/shareyow)
+[Coba demo TokenWatch](https://llm-cost-dashboard-omega.vercel.app/) | [Kode dan catatan teknis](https://github.com/Aeroo11/LLM-Cost-Dashboard)
 
-## Teknologi yang saya gunakan
+### Faktura
 
-- **Data dan machine learning** · Python, DuckDB, dbt, pandas, scikit-learn
-- **Aplikasi** · TypeScript, Next.js, React Native, FastAPI
-- **Pengujian dan otomasi** · GitHub Actions, Vitest, Docker
+Membaca invoice, mencocokkannya dengan pesanan pembelian dan bukti penerimaan
+barang, lalu mengirim selisih ke antrean review. Sistem mendeteksi
+**99 dari 99 anomali** pada evaluasi invoice sintetis.
+
+[Proyek dan hasil evaluasi](https://github.com/Aeroo11/faktura/blob/main/README.id.md)
+
+**Stack utama** Python, SQL, DuckDB, dbt, FastAPI, Next.js, dan Docker.
+
+<details>
+<summary>Proyek lain</summary>
+
+- [Dashboard IDX](https://github.com/Aeroo11/Dashboard_IDX) untuk screening saham BEI, jurnal, dan backtest.
+- [share.yow](https://github.com/Aeroo11/shareyow) untuk membagi pengeluaran bersama dan menyimpan transaksi secara offline.
+
+</details>
 
 <details>
 <summary>Aktivitas kontribusi</summary>
