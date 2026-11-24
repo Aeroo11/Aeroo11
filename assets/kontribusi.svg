@@ -480,6 +480,8 @@
 <rect class="cell" style="animation-delay:1.28s" x="886" y="172" width="13" height="13" rx="3" fill="#1f4f80"><title>2026-11-20: 1 kontribusi</title></rect>
 <rect class="cell" style="animation-delay:1.28s" x="887" y="189" width="11" height="11" rx="3" fill="none" stroke="#3b5583" stroke-width="1"><title>2026-11-21: 0 kontribusi</title></rect>
 <rect class="cell" style="animation-delay:1.30s" x="903" y="93" width="11" height="11" rx="3" fill="none" stroke="#3b5583" stroke-width="1"><title>2026-11-22: 0 kontribusi</title></rect>
+<rect class="cell" style="animation-delay:1.30s" x="903" y="109" width="11" height="11" rx="3" fill="none" stroke="#3b5583" stroke-width="1"><title>2026-11-23: 0 kontribusi</title></rect>
+<rect class="cell" style="animation-delay:1.30s" x="903" y="125" width="11" height="11" rx="3" fill="none" stroke="#3b5583" stroke-width="1"><title>2026-11-24: 0 kontribusi</title></rect>
 <use href="#foot" class="fp" fill="#cfe0f5" style="animation-delay:0.00s" transform="translate(80.5 143.5) rotate(90) scale(1.1)"/>
 <use href="#foot" class="fp" fill="#cfe0f5" style="animation-delay:0.11s" transform="translate(88.5 149.5) rotate(90) scale(1.1)"/>
 <use href="#foot" class="fp" fill="#cfe0f5" style="animation-delay:0.21s" transform="translate(96.5 143.5) rotate(90) scale(1.1)"/>
@@ -604,5 +606,5 @@
 <rect x="786" y="294" width="13" height="13" rx="3" fill="#5fb6ec"/>
 <rect x="802" y="294" width="13" height="13" rx="3" fill="#d4f3ff"/>
 <text class="t" x="824" y="304" font-size="10" opacity=".75">banyak</text>
-<text class="t" x="70" y="304" font-size="10" font-style="italic" opacity=".6">diperbarui 2026-11-22</text>
+<text class="t" x="70" y="304" font-size="10" font-style="italic" opacity=".6">diperbarui 2026-11-24</text>
 </svg>
